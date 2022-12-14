@@ -1,0 +1,12 @@
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\bin\Debug\net5.0\FinalProject.Domain.deps.json
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\bin\Debug\net5.0\FinalProject.Domain.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\bin\Debug\net5.0\FinalProject.Domain.pdb
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.csproj.AssemblyReference.cache
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.AssemblyInfoInputs.cache
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.AssemblyInfo.cs
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.csproj.CoreCompileInputs.cache
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\refint\FinalProject.Domain.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\FinalProject.Domain.pdb
+C:\Users\lasha\source\repos\FinalProject\FinalProject.Domain\obj\Debug\net5.0\ref\FinalProject.Domain.dll
