@@ -12,6 +12,7 @@ namespace FinalProject.Interfaces
         Loan UpdateLoan(ForUserUpdateLoanModel loan,int currentId);
         Loan CheckLoan(int currentuserid);
         Loan RemoveLoan(int currenusertid);
+        
 
 
 

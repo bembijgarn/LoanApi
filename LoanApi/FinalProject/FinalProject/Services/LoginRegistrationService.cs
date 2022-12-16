@@ -43,11 +43,19 @@ namespace FinalProject.Services
                 _context.SaveChanges();
                 return Dbuser;
             }
+            return null;          
+        }
+        public User ChangePassword(ChangePasswordModel changepassword, string currentuseremail)
+        {
+            var Dbuser = _context.User.Where(x => x.Email == currentuseremail).SingleOrDefault();
+            if (Dbuser != null)
+            {
+                Dbuser.Password = new HashPassword().HashPass(changepassword.NewPassword);
+                _context.Update(Dbuser);
+                _context.SaveChanges();
+                return Dbuser;
+            }
             return null;
-
-
-           
-
         }
     }
 }

@@ -9,5 +9,8 @@ namespace FinalProject.Interfaces
     {
         User LoginUser(LoginModel user);
         User RegistrationUser(RegistrationModel user);
+        User ChangePassword(ChangePasswordModel changepassword, string currentuseremail);
+
+
     }
 }

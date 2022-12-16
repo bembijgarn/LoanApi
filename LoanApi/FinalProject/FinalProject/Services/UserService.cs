@@ -90,6 +90,7 @@ namespace FinalProject.Services
             }
             return null;
         }
+        
         #region checkusersalarymethod
         public bool CheckUserSalary(ForUserUpdateLoanModel loan, double salary)
         {

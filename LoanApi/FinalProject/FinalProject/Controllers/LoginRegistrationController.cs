@@ -13,6 +13,7 @@ using FinalProject.TokenGenerator;
 using FinalProject.Models;
 using System;
 using FinalProject.Validations;
+using System.Security.Claims;
 
 namespace FinalProject.Controllers
 {
@@ -81,6 +82,36 @@ namespace FinalProject.Controllers
             catch (Exception ex)
             {
                 Serilog.Log.Error("Error LoginRegistrationController {0}", ex);               
+            }
+            return null;
+        }
+        [Authorize(Roles = Role.User)]
+        [HttpPut("ChangePassword")]
+        public IActionResult ChangePassowrd(ChangePasswordModel Changepassword)
+        {
+            Serilog.Log.Information("Called LoginRegistrationController");
+            try
+            {
+                var Validate = new ChangePasswordValidation().Validate(Changepassword);
+                string Email = User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault().Value;
+                if (!Validate.IsValid)
+                {
+                    return BadRequest(Validate.Errors[0].ErrorMessage);
+                }
+                if (Email == null) return BadRequest("Email Not Found");               
+                var Dbuser = _loginservice.ChangePassword(Changepassword,Email);
+                if (Dbuser != null)
+                {
+                    return Ok( new
+                    {
+                        Password = Changepassword.NewPassword
+                    });
+                }
+                return BadRequest("Please Contact Support");
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error LoginRegistrationController {0}", ex);
             }
             return null;
         }
