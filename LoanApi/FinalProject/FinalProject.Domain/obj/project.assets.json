@@ -3509,6 +3509,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Serilog >= 2.12.0",
       "Serilog.AspNetCore >= 6.1.0",
       "Serilog.Sinks.MSSqlServer >= 6.0.0"
     ]
@@ -3558,6 +3559,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "Serilog": {
+            "target": "Package",
+            "version": "[2.12.0, )"
+          },
           "Serilog.AspNetCore": {
             "target": "Package",
             "version": "[6.1.0, )"

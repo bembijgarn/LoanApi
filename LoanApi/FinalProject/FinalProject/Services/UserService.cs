@@ -69,7 +69,27 @@ namespace FinalProject.Services
                 return Dbuser;
             }
             return null;
-        }        
+        }
+       public Loan CheckLoan(int currenUsertid)
+        {
+            var Dbloan = _context.Loan.FirstOrDefault(x => x.UserId == currenUsertid && x.LoanCondition == Loancondition.Active);
+            if (Dbloan != null)
+            {
+                return Dbloan;
+            }
+            return null;
+        }
+        public Loan RemoveLoan(int currenusertid)
+        {
+            var Dbloan = _context.Loan.FirstOrDefault(x => x.UserId == currenusertid && x.Status != LoanStatus.Accpeted);
+            if (Dbloan != null)
+            {
+                _context.Loan.Remove(Dbloan);
+                _context.SaveChanges();
+                return Dbloan;
+            }
+            return null;
+        }
         #region checkusersalarymethod
         public bool CheckUserSalary(ForUserUpdateLoanModel loan, double salary)
         {

@@ -63,6 +63,10 @@
               "target": "Package",
               "version": "[5.0.0, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.12.0, )"
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[6.1.0, )"
@@ -133,6 +137,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.12.0, )"
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[6.1.0, )"
@@ -207,6 +215,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.4.0, )"
+            },
             "MediatR": {
               "target": "Package",
               "version": "[11.1.0, )"
@@ -244,6 +256,14 @@
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[6.1.0, )"
+            },
+            "Serilog.Extensions.Logging": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[4.1.0, )"
             },
             "Serilog.Sinks.MSSqlServer": {
               "target": "Package",

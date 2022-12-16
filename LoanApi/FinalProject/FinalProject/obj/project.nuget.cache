@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "k/KpCrGMieYKNfJ6THJoDJ+akreWJ5USPWvCj+hnkFnDqx/sDSTGjqXDFwC/VTcCKqHZ1+0rPEIQuQy8+AV9ug==",
+  "dgSpecHash": "T7eYvE50MZD7RdbuvtOyRKrbWoRW93ieNCfrnxYK0G91OuhF+m3aGdKkXJqo6oA5Va5HVQ3qLoc3hJQTMXSHCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\lasha\\source\\repos\\FinalProject\\FinalProject\\FinalProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lasha\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\lasha\\.nuget\\packages\\fluentvalidation\\11.4.0\\fluentvalidation.11.4.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
@@ -86,7 +87,7 @@
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.extensions.logging\\3.1.0\\serilog.extensions.logging.3.1.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.formatting.compact\\1.1.0\\serilog.formatting.compact.1.1.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.settings.configuration\\3.3.0\\serilog.settings.configuration.3.3.0.nupkg.sha512",
-    "C:\\Users\\lasha\\.nuget\\packages\\serilog.sinks.console\\4.0.1\\serilog.sinks.console.4.0.1.nupkg.sha512",
+    "C:\\Users\\lasha\\.nuget\\packages\\serilog.sinks.console\\4.1.0\\serilog.sinks.console.4.1.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.sinks.debug\\2.0.0\\serilog.sinks.debug.2.0.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.sinks.file\\5.0.0\\serilog.sinks.file.5.0.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\serilog.sinks.mssqlserver\\6.0.0\\serilog.sinks.mssqlserver.6.0.0.nupkg.sha512",

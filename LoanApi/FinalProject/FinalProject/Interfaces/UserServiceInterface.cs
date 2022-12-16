@@ -10,6 +10,8 @@ namespace FinalProject.Interfaces
         Loan AddLoan(ForUserUpdateLoanModel loan,string mail);
         bool CheckUserSalary(ForUserUpdateLoanModel loan, double salary);
         Loan UpdateLoan(ForUserUpdateLoanModel loan,int currentId);
+        Loan CheckLoan(int currentuserid);
+        Loan RemoveLoan(int currenusertid);
 
 
 

@@ -1401,6 +1401,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "Serilog": "2.12.0",
           "Serilog.AspNetCore": "6.1.0",
           "Serilog.Sinks.MSSqlServer": "6.0.0"
         },
@@ -4001,6 +4002,7 @@
       "Microsoft.EntityFrameworkCore >= 5.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.0",
+      "Serilog >= 2.12.0",
       "Serilog.AspNetCore >= 6.1.0",
       "Serilog.Sinks.MSSqlServer >= 6.0.0"
     ]
@@ -4067,6 +4069,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[5.0.0, )"
+          },
+          "Serilog": {
+            "target": "Package",
+            "version": "[2.12.0, )"
           },
           "Serilog.AspNetCore": {
             "target": "Package",

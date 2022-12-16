@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Serilog.Context;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace FinalProject
                  .EnableSensitiveDataLogging()
                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
+          
             services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -95,6 +97,7 @@ namespace FinalProject
             services.AddScoped<Iuserservice, UserService>();
             services.AddScoped<Iadminservice, Adminservice>();
             services.AddScoped<ILoginRegistrationInterface, LoginRegistrationService>();
+            services.AddScoped<IGenerateAdminInterface, GenerateAdminService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,7 +117,14 @@ namespace FinalProject
             app.UseAuthentication();
             app.UseAuthorization();
 
-            
+            app.Use((httpContext, next) =>
+            {
+                var username = httpContext.User.Identity.IsAuthenticated ? 
+                httpContext.User.Identity.Name : "anonymous";               
+                LogContext.PushProperty("UserId", username);
+
+                return next.Invoke();
+            });
 
             app.UseEndpoints(endpoints =>
             {

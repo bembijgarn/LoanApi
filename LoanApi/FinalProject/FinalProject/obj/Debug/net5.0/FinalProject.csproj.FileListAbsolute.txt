@@ -99,3 +99,4 @@ C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\System.Me
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\MediatR.dll
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\MediatR.Contracts.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\FluentValidation.dll

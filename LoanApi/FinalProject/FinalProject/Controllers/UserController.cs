@@ -17,15 +17,16 @@ using System.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using Loan_API.Controllers;
 using FinalProject.Services;
 using FinalProject.Models;
+using FinalProject.Validations;
+using FinalProject.DomainpropertyHelpers;
 
 namespace FinalProject.Controllers
 {
     [Authorize]
     [Route("api/[Controller]")]
-    public class UserController : BaseController
+    public class UserController : Controller
     {
         private Iuserservice _service;
         private readonly AppSettings _appSettings;
@@ -41,59 +42,138 @@ namespace FinalProject.Controllers
         [Authorize(Roles = Role.User)]
         [HttpPost("AddLoan/{mail}")]
         public IActionResult AddLoan(ForUserUpdateLoanModel loan,  string mail)
-        {
-            var usersalary = Convert.ToDouble(User.Claims.Where(x => x.Type == ClaimTypes.Country).FirstOrDefault().Value);//claimtypes.country ==  authorized user.salary;
-            var UserEmail = User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault().Value;
-            if (UserEmail == null) return NotFound("Invalid User");
-            if (UserEmail != mail)
+        {            
+            Serilog.Log.Information("Called UserController");
+            try
             {
-                return BadRequest("Invalid Email Adress");
-            }
-            var Dbuser = _service.AddLoan(loan,  mail);
-            if (Dbuser == null)
-            {
-                return BadRequest("You have already Active LOAN");
-            }
-            var checksalary = _service.CheckUserSalary(loan, usersalary);
-            if (checksalary == false)
-            {
-                return BadRequest("You Cant request this Amount of loan");
-            }
-            return Ok("Loan Requested" + new
-            {
-                LoanType = loan.Currency,
-                Currecy = loan.Currency,
-                Amount = loan.Amount,
-                LoanPeriod = loan.LoanPeriodmonthly + " Month",
-            });
-        }
-        [Authorize(Roles = Role.User)]
-        [HttpPut("UpdateLoan")]
-        public IActionResult UpdateLoan([FromBody]ForUserUpdateLoanModel loan,int currentid)
-        {
-            currentid = Convert.ToInt32(User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value);
-            var Userloan = _service.UpdateLoan(loan, currentid);
-            Userloan.UserId = currentid;
-            if (currentid != Userloan.UserId)
-            {
-                return BadRequest("You havenot access");
-            }
-            if (Userloan != null)
-            {
-                return Ok(new
+                var Validate = new ForUserUpdateLoanValidation().Validate(loan);
+                if (!Validate.IsValid)
                 {
-                    Loantype = Userloan.LoanType,
-                    Amount = Userloan.Amount,
-                    Currecy = Userloan.Currency,
-                    Loanperiodmonthly = Userloan.LoanPeriodmonthly + " Month",
-                    Status = Userloan.Status,
-                    Loancondition = Userloan.LoanCondition
+                    return BadRequest(Validate.Errors[0].ErrorMessage);
+                }
+                var usersalary = Convert.ToDouble(User.Claims.Where(x => x.Type == ClaimTypes.Country).FirstOrDefault().Value);//claimtypes.country ==  authorized user.salary;
+                var UserEmail = User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault().Value;
+                if (UserEmail == null) return NotFound("Invalid User");
+                if (UserEmail != mail)
+                {
+                    return BadRequest("Invalid Email Adress");
+                }
+                var Dbuser = _service.AddLoan(loan, mail);
+                if (Dbuser == null)
+                {
+                    return BadRequest("You have already Active LOAN");
+                }
+                var checksalary = _service.CheckUserSalary(loan, usersalary);
+                if (checksalary == false)
+                {
+                    return BadRequest("You Cant request this Amount of loan");
+                }
+                return Ok("Loan Requested" + new
+                {
+                    LoanType = loan.Currency,
+                    Currecy = loan.Currency,
+                    Amount = loan.Amount,
+                    LoanPeriod = loan.LoanPeriodmonthly + " Month",
                 });
             }
-            return BadRequest("User not found");
-
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error UserController {0}", ex);
+            }
+            return null;
         }
-      
+
+        [Authorize(Roles = Role.User)]
+        [HttpPut("UpdateLoan")]
+        public IActionResult UpdateLoan(ForUserUpdateLoanModel loan)
+        {            
+            Serilog.Log.Information("Called UserController");
+            try
+            {
+                var Validate = new ForUserUpdateLoanValidation().Validate(loan);
+                if (!Validate.IsValid)
+                {
+                    return BadRequest(Validate.Errors[0].ErrorMessage);
+                }
+                int currentid = Convert.ToInt32(User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value);
+                var Userloan = _service.UpdateLoan(loan, currentid);
+                Userloan.UserId = currentid;
+                if (currentid != Userloan.UserId)
+                {
+                    return BadRequest("You havenot access");
+                }
+                if (Userloan != null)
+                {
+                    return Ok(new
+                    {
+                        Loantype = Userloan.LoanType,
+                        Amount = Userloan.Amount,
+                        Currecy = Userloan.Currency,
+                        Loanperiodmonthly = Userloan.LoanPeriodmonthly + " Month",
+                        Status = Userloan.Status,
+                        Loancondition = Userloan.LoanCondition
+                    });
+                }
+                return BadRequest("User not found");
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error UserController {0}", ex);
+            }
+            return null;
+        }
+
+        [Authorize(Roles = Role.User)]
+        [HttpGet("CheckLoanInfo")]
+        public IActionResult CheckYourLoanInfo()
+        {            
+            Serilog.Log.Information("Called UserController");
+            try
+            {
+                int currentuserid = Convert.ToInt32(User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value);
+                var Userloan = _service.CheckLoan(currentuserid);
+                if (Userloan != null)
+                {
+                    return Ok(new
+                    {
+                        Loantype = Userloan.LoanType,
+                        Amount = Userloan.Amount,
+                        Currecy = Userloan.Currency,
+                        Loanperiodmonthly = Userloan.LoanPeriodmonthly + " Month",
+                        Status = Userloan.Status,
+                        Loancondition = Userloan.LoanCondition
+                    });
+                }
+                return BadRequest("You Have Not Loan");
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error UserController {0}", ex);
+            }
+            return null;
+        }
+
+        [Authorize(Roles = Role.User)]
+        [HttpDelete("DeleteLoan")]
+        public IActionResult DeleteLoan()
+        {            
+            Serilog.Log.Information("Called UserController");
+            try
+            {
+                int currentuserid = Convert.ToInt32(User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value);
+                var userloan = _service.RemoveLoan(currentuserid);
+                if (userloan != null)
+                {
+                    return Ok("Your Loan Is Deleted");
+                }
+                return BadRequest("You Can't Remove Loan,Please Contact Support");
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error UserController {0}", ex);
+            }
+            return null;            
+        }
     }    
 }
 

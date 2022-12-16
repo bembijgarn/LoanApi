@@ -18,14 +18,14 @@ using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using System.Reflection.Metadata.Ecma335;
 using Azure.Core;
-using Loan_API.Controllers;
 using FinalProject.Models;
+using System.Threading;
 
 namespace FinalProject.Controllers
 {
     [Authorize]
     [Route("api/[Controller]")]
-    public class AdminController : BaseController
+    public class AdminController : Controller
     {
         private readonly Iadminservice _adminservice;
         private readonly AppSettings _appSettings;
@@ -36,84 +36,150 @@ namespace FinalProject.Controllers
             _logger = logger;
             _adminservice = adminservice;
             _appSettings = appsettings.Value;
-        }              
+        }
+
         [Authorize(Roles = Role.Accountant)]
         [HttpGet("GETAlluser")]
         public IActionResult GetUsers()
         {
-           
+            Serilog.Log.Information("Called admincontroler");
+            try
+            {
                 var users = _adminservice.GettAll();
-                return Ok(users);           
-            
+                return Ok(users);
+            }catch(Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}",ex);
+            }
+            return null;           
         }
+
         [Authorize(Roles = Role.Accountant)]
         [HttpGet("Loaninfo/{mail}")]
         public IActionResult Getloaninfo(string mail)
-        {
-            var userloan = _adminservice.ChekLoan(mail);
-            if (userloan == null)
+        {           
+            Serilog.Log.Information("Called admincontroler");
+            try
             {
-                return NotFound("user has not Loan");
+                var userloan = _adminservice.ChekLoan(mail);
+                if (userloan == null)
+                {
+                    return NotFound("user has not Loan");
+                }
+                return Ok(userloan);
             }
-            return Ok(userloan);
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}", ex);
+            }
+            return null;
         }
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("Updateuserloan/{id}")]
-        public IActionResult UpdateUserLoan(UpdateUserLoanModel loan,int id)
-        {
-           var userloan = _adminservice.UpdateUserLoan(loan, id);
-            if (userloan == null)
+
+        public IActionResult UpdateUserLoan(UpdateUserLoanModel loan, int id)
+        {           
+            Serilog.Log.Information("Called admincontroler");
+            try
             {
-                return BadRequest("User Loan Not Found");
+                var userloan = _adminservice.UpdateUserLoan(loan, id);
+                if (userloan == null)
+                {
+                    return BadRequest("User Loan Not Found");
+                }
+                return Ok("updated");
             }
-            return Ok("updated");
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}", ex);
+            }
+            return null;
         }
-        
+
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("BlockOrUnblockUserByID/{id}/{Block}")]
         public IActionResult BlockOrUnblockUserById(int id, string Block)
-        {
-            if (Block.ToUpper() == "BLOCK")
+        {           
+            Serilog.Log.Information("Called admincontroler");
+            try
             {
-                _adminservice.BlockOrUnblockUserbyId( id, Block);
-                return Ok("User Blocked");
+                if (Block.ToUpper() == "BLOCK")
+                {
+                    _adminservice.BlockOrUnblockUserbyId(id, Block);
+                    return Ok("User Blocked");
 
+                }
+                if (Block.ToUpper() == "UNBLOCK")
+                {
+                    _adminservice.BlockOrUnblockUserbyId(id, Block);
+                    return Ok("User Unblocked");
+                }
+                return BadRequest("Invalid  Admin Command");
             }
-            if (Block.ToUpper() == "UNBLOCK")
+            catch (Exception ex)
             {
-                _adminservice.BlockOrUnblockUserbyId( id, Block);
-                return Ok("User Unblocked");
+                Serilog.Log.Error("Error AdminController {0}", ex);
             }
-            return BadRequest("Invalid  Admin Command");
-        }       
+            return null;
+        }
+
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("AcceptLoanByuserId/{id}")]
-        public IActionResult AcceptUserloanByid( int id)
-        {
-            var Dbuser = _adminservice.AccepLoanbyUserId(id);
-            if (Dbuser == null)
+        public IActionResult AcceptUserloanByid(int id)
+        {           
+            Serilog.Log.Information("Called admincontroler");
+            try
             {
-                return NotFound("User Not Found");
+                var Dbuser = _adminservice.AccepLoanbyUserId(id);
+                if (Dbuser == null)
+                {
+                    return NotFound("User Not Found");
+                }
+                return Ok("Accepted");
             }
-            return Ok("Accepted");
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}", ex);
+            }
+            return null;
         }
+
         [Authorize(Roles = Role.Accountant)]
         [HttpDelete("RemoveUserById/{id}")]
         public IActionResult RemoveuserById(int id)
-        {
-          var deleteuser =   _adminservice.Removeuser(id);
-            if (deleteuser == null)
+        {           
+            Serilog.Log.Information("Called admincontroler");
+            try
             {
-                return BadRequest("User Not Found");
+                var deleteuser = _adminservice.Removeuser(id);
+                if (deleteuser == null)
+                {
+                    return BadRequest("User Not Found");
+                }
+                return Ok("deleted");
             }
-            return Ok("deleted");
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}", ex);
+            }
+            return null;
         }
+
         [Authorize(Roles = Role.Accountant)]
         [HttpDelete("RemoveloanbyUserid/{id}")]
         public IActionResult RemoveLoanByUserId(int id)
-        {
-            _adminservice.RemoveLoanbyUserId(id);
-            return Ok("Loan Removed");
+        {          
+            Serilog.Log.Information("Called admincontroler");
+            try
+            {
+                _adminservice.RemoveLoanbyUserId(id);
+                return Ok("Loan Removed");
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error("Error AdminController {0}", ex);
+            }
+            return null;
         }
     }
 }
