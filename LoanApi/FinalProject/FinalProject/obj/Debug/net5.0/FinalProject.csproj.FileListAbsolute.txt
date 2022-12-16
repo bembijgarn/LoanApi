@@ -97,3 +97,5 @@ C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\Serilog.S
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\Serilog.Sinks.PeriodicBatching.dll
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\System.Memory.Data.dll
 C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\MediatR.dll
+C:\Users\lasha\source\repos\FinalProject\FinalProject\bin\Debug\net5.0\MediatR.Contracts.dll

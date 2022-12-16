@@ -1,16 +1,16 @@
 ﻿using FinalProject.Domain;
 using System.Collections.Generic;
 using System;
+using FinalProject.Models;
 
 namespace FinalProject.Interfaces
 {
     public interface Iuserservice
-    {
-        User Registration(User user);
-        User Login(User user);
-        Loan AddLoan(Loan loan,User user,string mail);
-        bool CheckUserSalary(Loan loan, double salary);
-        Loan UpdateLoan(Loan loan,int currentId);
+    {      
+        Loan AddLoan(ForUserUpdateLoanModel loan,string mail);
+        bool CheckUserSalary(ForUserUpdateLoanModel loan, double salary);
+        Loan UpdateLoan(ForUserUpdateLoanModel loan,int currentId);
+
 
 
 

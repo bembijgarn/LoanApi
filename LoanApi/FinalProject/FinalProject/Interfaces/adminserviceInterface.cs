@@ -1,4 +1,5 @@
 ﻿using FinalProject.Domain;
+using FinalProject.Models;
 using System.Collections.Generic;
 
 namespace FinalProject.Interfaces
@@ -9,8 +10,8 @@ namespace FinalProject.Interfaces
         IEnumerable<User> GettAll();
         Loan RemoveLoanbyUserId(int id);
         Loan ChekLoan(string mail);
-        Loan UpdateUserLoan(Loan loan, int id);
-        User BlockOrUnblockUserbyId(User user, int id, string Block);
-        Loan AccepLoanbyUserId(Loan loan,int Id);
+        Loan UpdateUserLoan(UpdateUserLoanModel userloan, int id);
+        User BlockOrUnblockUserbyId(int id, string Block);
+        Loan AccepLoanbyUserId(int Id);
     }
 }

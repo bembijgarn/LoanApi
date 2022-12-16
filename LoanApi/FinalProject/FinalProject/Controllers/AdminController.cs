@@ -18,12 +18,14 @@ using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using System.Reflection.Metadata.Ecma335;
 using Azure.Core;
+using Loan_API.Controllers;
+using FinalProject.Models;
 
 namespace FinalProject.Controllers
 {
     [Authorize]
     [Route("api/[Controller]")]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly Iadminservice _adminservice;
         private readonly AppSettings _appSettings;
@@ -51,40 +53,44 @@ namespace FinalProject.Controllers
             var userloan = _adminservice.ChekLoan(mail);
             if (userloan == null)
             {
-                return NotFound("user not found");
+                return NotFound("user has not Loan");
             }
             return Ok(userloan);
         }
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("Updateuserloan/{id}")]
-        public IActionResult UpdateUserLoan([FromBody] Loan loan, int id)
+        public IActionResult UpdateUserLoan(UpdateUserLoanModel loan,int id)
         {
-            _adminservice.UpdateUserLoan(loan, id);
+           var userloan = _adminservice.UpdateUserLoan(loan, id);
+            if (userloan == null)
+            {
+                return BadRequest("User Loan Not Found");
+            }
             return Ok("updated");
         }
         
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("BlockOrUnblockUserByID/{id}/{Block}")]
-        public IActionResult BlockOrUnblockUserById([FromBody] User user, int id, string Block)
+        public IActionResult BlockOrUnblockUserById(int id, string Block)
         {
             if (Block.ToUpper() == "BLOCK")
             {
-                _adminservice.BlockOrUnblockUserbyId(user, id, Block);
+                _adminservice.BlockOrUnblockUserbyId( id, Block);
                 return Ok("User Blocked");
 
             }
             if (Block.ToUpper() == "UNBLOCK")
             {
-                _adminservice.BlockOrUnblockUserbyId(user, id, Block);
+                _adminservice.BlockOrUnblockUserbyId( id, Block);
                 return Ok("User Unblocked");
             }
             return BadRequest("Invalid  Admin Command");
         }       
         [Authorize(Roles = Role.Accountant)]
         [HttpPut("AcceptLoanByuserId/{id}")]
-        public IActionResult AcceptUserloanByid([FromBody] Loan loan, int id)
+        public IActionResult AcceptUserloanByid( int id)
         {
-            var Dbuser = _adminservice.AccepLoanbyUserId(loan, id);
+            var Dbuser = _adminservice.AccepLoanbyUserId(id);
             if (Dbuser == null)
             {
                 return NotFound("User Not Found");
@@ -92,10 +98,14 @@ namespace FinalProject.Controllers
             return Ok("Accepted");
         }
         [Authorize(Roles = Role.Accountant)]
-        [HttpDelete("as")]
-        public IActionResult Removeuser(int id)
+        [HttpDelete("RemoveUserById/{id}")]
+        public IActionResult RemoveuserById(int id)
         {
-            _adminservice.Removeuser(id);
+          var deleteuser =   _adminservice.Removeuser(id);
+            if (deleteuser == null)
+            {
+                return BadRequest("User Not Found");
+            }
             return Ok("deleted");
         }
         [Authorize(Roles = Role.Accountant)]

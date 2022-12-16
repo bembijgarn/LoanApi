@@ -1,6 +1,8 @@
 ﻿using FinalProject.DATA;
 using FinalProject.Domain;
 using FinalProject.Interfaces;
+using FinalProject.Models;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +18,10 @@ namespace FinalProject.Services
         public  User Removeuser(int id)
         {                   
             var usertoremove = _context.User.Find(id);
+            if (usertoremove == null)
+            {
+                return null;
+            }
             _context.Remove(usertoremove);
             _context.SaveChanges();
             return usertoremove;
@@ -38,7 +44,7 @@ namespace FinalProject.Services
             var userwithloan = _context.Loan.Where(x => x.UserId == user.Id).FirstOrDefault(); ;
             return userwithloan;
         }
-        public Loan UpdateUserLoan(Loan loan, int id)
+        public Loan UpdateUserLoan(UpdateUserLoanModel loan ,int id)
         {
             var Dbuser = _context.Loan.FirstOrDefault(x => x.UserId == id);
             if (Dbuser != null)
@@ -50,10 +56,11 @@ namespace FinalProject.Services
                 Dbuser.LoanCondition = Loancondition.Active;
                 _context.Loan.Update(Dbuser);
                 _context.SaveChanges();
+                return Dbuser;
             }
-            return loan;
+            return null;
         }
-        public User BlockOrUnblockUserbyId(User user,int id,string Block)
+        public User BlockOrUnblockUserbyId(int id,string Block)
         {
             var Dbuser = _context.User.Find(id);
             if (Block.ToUpper() == "BLOCK")
@@ -66,9 +73,9 @@ namespace FinalProject.Services
             }
             _context.Update(Dbuser);
             _context.SaveChanges();
-            return user;
+            return Dbuser;
         }
-        public Loan AccepLoanbyUserId(Loan loan, int Id)
+        public Loan AccepLoanbyUserId(int Id)
         {
             var Dbuser = _context.Loan.FirstOrDefault(x => x.Status == LoanStatus.Requested && x.LoanCondition == Loancondition.Active && x.UserId == Id);
             if (Dbuser != null)
@@ -78,7 +85,7 @@ namespace FinalProject.Services
                 _context.SaveChanges();
             }
            
-            return loan;
+            return Dbuser;
         }
     }
 }

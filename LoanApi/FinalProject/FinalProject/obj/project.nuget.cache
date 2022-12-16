@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "H+UN1C/HzuUyWQ5MaEoE18wpLrasEQObvr0mYYgnrXzNt9x6WvuTgiweJQh+Z6RYrtb5IoUh3LfpI558ofQzQg==",
+  "dgSpecHash": "k/KpCrGMieYKNfJ6THJoDJ+akreWJ5USPWvCj+hnkFnDqx/sDSTGjqXDFwC/VTcCKqHZ1+0rPEIQuQy8+AV9ug==",
   "success": true,
   "projectFilePath": "C:\\Users\\lasha\\source\\repos\\FinalProject\\FinalProject\\FinalProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lasha\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\lasha\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
+    "C:\\Users\\lasha\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.9\\microsoft.aspnet.webapi.core.5.2.9.nupkg.sha512",
     "C:\\Users\\lasha\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.0\\microsoft.aspnetcore.authentication.jwtbearer.5.0.0.nupkg.sha512",

@@ -17,12 +17,15 @@ using System.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using Loan_API.Controllers;
+using FinalProject.Services;
+using FinalProject.Models;
 
 namespace FinalProject.Controllers
 {
     [Authorize]
     [Route("api/[Controller]")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private Iuserservice _service;
         private readonly AppSettings _appSettings;
@@ -34,50 +37,19 @@ namespace FinalProject.Controllers
             _service = userservice;
             _appSettings = appsettings.Value;
         }
-        [AllowAnonymous]
-        [HttpPost("Registration")]
-        public IActionResult Registration([FromBody] User user)
-        {
-           
-            _service.Registration(user);
-            return Ok(user);
-        }
-        [AllowAnonymous]
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] User user)
-        {
-            Serilog.Log.Information("usercontroller log");
-            try
-            {
-                var Dbuser = _service.Login(user);
-                if (Dbuser == null)
-                    return BadRequest("Username or Password is incorrect");
-                string token = new GenerateTokenclass(_appSettings).GenerateToken(Dbuser);
-                return Ok(new
-                {
-                    Username = Dbuser.UserName,
-                    Password = Dbuser.Password,
-                    Role = Dbuser.Role,
-                    Token = token
-                });
-            }catch(Exception ex)
-            {
-                Serilog.Log.Error("error asdolasd", ex);
-            }
-            return Ok();
-        }    
-        [Authorize(Roles =Role.User)]
+
+        [Authorize(Roles = Role.User)]
         [HttpPost("AddLoan/{mail}")]
-        public IActionResult AddLoan([FromBody] Loan loan,User user, string mail)
+        public IActionResult AddLoan(ForUserUpdateLoanModel loan,  string mail)
         {
-                var usersalary = Convert.ToDouble(User.Claims.Where(x => x.Type == ClaimTypes.Country).FirstOrDefault().Value);//claimtypes.country ==  authorized user.salary;
-                var UserEmail = User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault().Value;
-                if (UserEmail == null) return NotFound("Invalid User");
-                if (UserEmail != mail)
-                {
-                    return Forbid("message");
-                }                   
-            var Dbuser = _service.AddLoan(loan,user,mail);
+            var usersalary = Convert.ToDouble(User.Claims.Where(x => x.Type == ClaimTypes.Country).FirstOrDefault().Value);//claimtypes.country ==  authorized user.salary;
+            var UserEmail = User.Claims.Where(x => x.Type == ClaimTypes.Email).FirstOrDefault().Value;
+            if (UserEmail == null) return NotFound("Invalid User");
+            if (UserEmail != mail)
+            {
+                return BadRequest("Invalid Email Adress");
+            }
+            var Dbuser = _service.AddLoan(loan,  mail);
             if (Dbuser == null)
             {
                 return BadRequest("You have already Active LOAN");
@@ -97,7 +69,7 @@ namespace FinalProject.Controllers
         }
         [Authorize(Roles = Role.User)]
         [HttpPut("UpdateLoan")]
-        public IActionResult UpdateLoan([FromBody]Loan loan,int currentid)
+        public IActionResult UpdateLoan([FromBody]ForUserUpdateLoanModel loan,int currentid)
         {
             currentid = Convert.ToInt32(User.Claims.Where(x => x.Type == ClaimTypes.Name).FirstOrDefault().Value);
             var Userloan = _service.UpdateLoan(loan, currentid);
@@ -120,7 +92,8 @@ namespace FinalProject.Controllers
             }
             return BadRequest("User not found");
 
-        }        
+        }
+      
     }    
 }
 

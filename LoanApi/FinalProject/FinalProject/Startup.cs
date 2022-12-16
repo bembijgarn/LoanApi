@@ -94,6 +94,7 @@ namespace FinalProject
                    });
             services.AddScoped<Iuserservice, UserService>();
             services.AddScoped<Iadminservice, Adminservice>();
+            services.AddScoped<ILoginRegistrationInterface, LoginRegistrationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,14 +114,7 @@ namespace FinalProject
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.Use(async (httpContext, next) =>
-            {
-                var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";
-
-                LogContext.PushProperty("UserName", username);
-
-                await next.Invoke();
-            });
+            
 
             app.UseEndpoints(endpoints =>
             {

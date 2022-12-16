@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
+using FinalProject.Models;
 
 namespace FinalProject.Services
 {
@@ -23,56 +25,22 @@ namespace FinalProject.Services
         {
             _context = context;
             
-        }
-        public User Registration(User userr)
+        }      
+        public Loan AddLoan(ForUserUpdateLoanModel loan,string mail)
         {
-            userr.Role = Role.User;
-            userr.Password = new HashPassword().HashPass(userr.Password);
-            userr.IsBlocked = BlockedOrNot.Unblocked;
-            userr.loan = new List<Loan>() { };
-                      
-            _context.Add(userr);
-            _context.SaveChanges();
-
-            return userr;          
-        }
-        public User Login(User user)
-        {            
-            if (string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Password))
-                return null;
-            var DbUSer = _context.User.SingleOrDefault(x => x.UserName == user.UserName);
-            if (DbUSer == null)
-                return null;
-            if (new HashPassword().HashPass(user.Password) != DbUSer.Password)
-                return null;            
-            return DbUSer;
-        }       
-        public Loan AddLoan(Loan loan,User user,string mail)
-        {            
-            var Dbuser = _context.User.Where(x => x.Email == mail).SingleOrDefault();
-            if (_context.Loan.Any(x => x.UserId == Dbuser.Id && x.LoanCondition == Loancondition.Active 
-            || Dbuser.IsBlocked == BlockedOrNot.Blocked))
+            var User = _context.User.Where(x => x.Email == mail  &&  x.IsBlocked == BlockedOrNot.Unblocked).FirstOrDefault();
+            if (User == null)
             {
-                Dbuser = null;
                 return null;
             }
-             var checksalary = CheckUserSalary(loan, Convert.ToInt32(Dbuser.SalaryPerMonth));
-            if (checksalary)
-            {
-                Dbuser.loan.Add(new Loan
-                {
-                    LoanType = loan.LoanType,
-                    Amount = loan.Amount,
-                    Currency = loan.Currency,
-                    LoanPeriodmonthly = loan.LoanPeriodmonthly,
-                    LoanCondition = Loancondition.Active,
-                    Status = LoanStatus.Requested,
-                });
-                _context.User.Attach(Dbuser);
-                _context.SaveChanges();
-            }
+            var userloan = _context.Loan.Where(x => x.UserId == User.Id && x.LoanCondition != Loancondition.Active
+            || User.IsBlocked != BlockedOrNot.Blocked).FirstOrDefault();
 
-            Dbuser.loan.Add(new Loan
+            if (userloan == null)
+            {              
+                return null;
+            }
+            User.loan.Add(new Loan
             {
                 LoanType = loan.LoanType,
                 Amount = loan.Amount,
@@ -80,10 +48,12 @@ namespace FinalProject.Services
                 LoanPeriodmonthly = loan.LoanPeriodmonthly,
                 LoanCondition = Loancondition.Active,
                 Status = LoanStatus.Requested,
-            });           
-            return loan;            
+            });
+            _context.User.Attach(User);
+            _context.SaveChanges();            
+            return userloan;           
         }
-        public Loan UpdateLoan(Loan loan,int currentid)
+        public Loan UpdateLoan(ForUserUpdateLoanModel loan,int currentid)
         {
             var Dbuser = _context.Loan.FirstOrDefault(x => x.UserId == currentid && x.Status != LoanStatus.Accpeted
             && x.LoanCondition == Loancondition.Active);
@@ -96,11 +66,12 @@ namespace FinalProject.Services
                 Dbuser.LoanCondition = Loancondition.Active;
                 _context.Loan.Update(Dbuser);
                 _context.SaveChanges();
+                return Dbuser;
             }
-            return loan;
-        }
+            return null;
+        }        
         #region checkusersalarymethod
-        public bool CheckUserSalary(Loan loan, double salary)
+        public bool CheckUserSalary(ForUserUpdateLoanModel loan, double salary)
         {
             bool check = true;
             if ((loan.Amount / loan.LoanPeriodmonthly) > (salary / 2))
