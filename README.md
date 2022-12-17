@@ -45,10 +45,8 @@
 <pre>Add-Migration *migrationname*</pre>
  <pre>update-database</pre>
 
-* Change appsettingJsonSettings
-<pre>
+## Change appsettingJsonSettings
 ![App UI](/319844875_912308333102919_3874487259071747550_n.jpg)
-</pre>
 
 * Create WebApiLogs Table In Data Base (Script)
     
