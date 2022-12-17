@@ -46,7 +46,9 @@
  <pre>update-database</pre>
 
 * Change appsettingJsonSettings
-
+<pre>
+![App UI](/319844875_912308333102919_3874487259071747550_n.jpg)
+</pre>
 
 * Create WebApiLogs Table In Data Base (Script)
     
@@ -129,6 +131,5 @@ GO
 ## Testing
 The first step is to log in (username and password). Get Generated Token. Token format is "Bearer Access Token".
 
-## Photo
-![App UI](/319844875_912308333102919_3874487259071747550_n.jpg)
 
+ 
