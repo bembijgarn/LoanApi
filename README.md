@@ -46,9 +46,11 @@
  <pre>update-database</pre>
 
 * Change appsettingJsonSettings
-<pre>
-<img src="C:\Users\lasha\Desktop\monit/319844875_912308333102919_3874487259071747550_n.jpg" alt="Alt text" title="Optional title">
-</pre>
+<img
+  src="C:\Users\lasha\Desktop\monit/319844875_912308333102919_3874487259071747550_n.jpg"
+  alt="Alt text"
+  title="Optional title"
+  style="display: inline-block; margin: 0 auto; max-width: 300px">
 
 * Create WebApiLogs Table In Data Base (Script)
     
