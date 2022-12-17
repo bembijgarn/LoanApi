@@ -22,6 +22,19 @@
 * HASH256
 * Entity Framework Core
 
+## NugetPackages
+
+* Syste.Data.SqlClient
+* FluentValidation
+* Microsoft.AspNet.WebApi.Core
+* Microsoft.Entity.FrameworkCore
+* Microsoft.EntityFrameworkCore.Tools
+* Microsoft.AspNetCore.Authentication.JwtBearer
+* Serilog.AspNetCore
+* Serilog.Sinks.Console
+* Serilog.Sinks.MSSqlServer
+
+
 ## Installation
 
 * Clone github repository.
