@@ -46,11 +46,7 @@
  <pre>update-database</pre>
 
 * Change appsettingJsonSettings
-<img
-  src="C:\Users\lasha\Desktop\monit/319844875_912308333102919_3874487259071747550_n.jpg"
-  alt="Alt text"
-  title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
+
 
 * Create WebApiLogs Table In Data Base (Script)
     
@@ -132,4 +128,7 @@ GO
   
 ## Testing
 The first step is to log in (username and password). Get Generated Token. Token format is "Bearer Access Token".
+
+## Photo
+![App UI](C:\Users\lasha\Desktop\monit/319844875_912308333102919_3874487259071747550_n.jpg)
 
