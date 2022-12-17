@@ -108,7 +108,7 @@ GO
   * Delete User By User Id
   * Accept Loan By User Id
   * Block Loan By User Id
-  * Use string Block/Unblock
+  * Use string block/unblock
   <pre>{
       "Id" : 0,
       "Block" : "Block/Unblock"
