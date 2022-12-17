@@ -92,7 +92,10 @@ GO
 * Role-based authorization;
 * User Login via access token creation;
  * Role - Accountant;
- * Generate Role Accoutant ;
+ ## Generate Admin
+
+ ![App UI](/admin.png)
+
  * Accoutant UserName/Passowrd;
 <pre>
 {
