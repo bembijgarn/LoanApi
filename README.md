@@ -46,7 +46,7 @@
  <pre>update-database</pre>
 
 ## Change appsettingJsonSettings
-![App UI](/319844875_912308333102919_3874487259071747550_n.jpg)
+![App UI](/appsettingsdatabase.jpg)
 
 * Create WebApiLogs Table In Data Base (Script)
     
