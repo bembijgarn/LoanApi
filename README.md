@@ -130,5 +130,5 @@ GO
 The first step is to log in (username and password). Get Generated Token. Token format is "Bearer Access Token".
 
 ## Photo
-![App UI](C:\Users\lasha\Desktop\monit/319844875_912308333102919_3874487259071747550_n.jpg)
+![App UI](/319844875_912308333102919_3874487259071747550_n.jpg)
 
