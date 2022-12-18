@@ -23,7 +23,7 @@ using System.Threading;
 
 namespace FinalProject.Controllers
 {
-    [Authorize]
+    [Authorize (Roles = Role.Accountant)]
     [Route("api/[Controller]")]
     public class AdminController : Controller
     {
@@ -38,7 +38,6 @@ namespace FinalProject.Controllers
             _appSettings = appsettings.Value;
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpGet("GETAlluser")]
         public IActionResult GetUsers()
         {
@@ -54,7 +53,6 @@ namespace FinalProject.Controllers
             return null;           
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpGet("Loaninfo/{mail}")]
         public IActionResult Getloaninfo(string mail)
         {           
@@ -74,9 +72,8 @@ namespace FinalProject.Controllers
             }
             return null;
         }
-        [Authorize(Roles = Role.Accountant)]
-        [HttpPut("Updateuserloan/{id}")]
 
+        [HttpPut("Updateuserloan/{id}")]
         public IActionResult UpdateUserLoan(UpdateUserLoanModel loan, int id)
         {           
             Serilog.Log.Information("Called admincontroler");
@@ -96,7 +93,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpPut("BlockOrUnblockUserByID/{id}/{Block}")]
         public IActionResult BlockOrUnblockUserById(int id, string Block)
         {           
@@ -123,7 +119,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpPut("AcceptLoanByuserId/{id}")]
         public IActionResult AcceptUserloanByid(int id)
         {           
@@ -144,7 +139,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpDelete("RemoveUserById/{id}")]
         public IActionResult RemoveuserById(int id)
         {           
@@ -165,7 +159,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.Accountant)]
         [HttpDelete("RemoveloanbyUserid/{id}")]
         public IActionResult RemoveLoanByUserId(int id)
         {          

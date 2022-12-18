@@ -24,7 +24,7 @@ using FinalProject.DomainpropertyHelpers;
 
 namespace FinalProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Role.User)]
     [Route("api/[Controller]")]
     public class UserController : Controller
     {
@@ -39,7 +39,6 @@ namespace FinalProject.Controllers
             _appSettings = appsettings.Value;
         }
 
-        [Authorize(Roles = Role.User)]
         [HttpPost("AddLoan/{mail}")]
         public IActionResult AddLoan(ForUserUpdateLoanModel loan,  string mail)
         {            
@@ -83,7 +82,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.User)]
         [HttpPut("UpdateLoan")]
         public IActionResult UpdateLoan(ForUserUpdateLoanModel loan)
         {            
@@ -123,7 +121,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.User)]
         [HttpGet("CheckLoanInfo")]
         public IActionResult CheckYourLoanInfo()
         {            
@@ -153,7 +150,6 @@ namespace FinalProject.Controllers
             return null;
         }
 
-        [Authorize(Roles = Role.User)]
         [HttpDelete("DeleteLoan")]
         public IActionResult DeleteLoan()
         {            
